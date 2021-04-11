@@ -4,7 +4,7 @@ user = 'root'
 password = ''
 db_name = 'fast_api_emotion_detection'
 
-db = MySQLDatabase(db_name, user=user, password=password, host='localhost')
+db = MySQLDatabase(db_name, user=user, password=password, host='78.31.188.217')
 
 
 class User(Model):

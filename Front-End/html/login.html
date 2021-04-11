@@ -11,7 +11,6 @@
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script src = "./Main/main.js"></script>
 
 <div class="row mt-md-5">
     <div class="col-md-6 mx-auto" style="max-width: 500px">
@@ -27,17 +26,20 @@
     <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" >
   </div>
     <div class="form-group m-2 ml-4">
-        <a href="../Register/register.html" style="color: #6144a4">Don't have account/Create new</a> <a style="color: #6144a4" class="col-auto ml-2" href="">Access as a Guest</a>
+        <a href="register.html" style="color: #6144a4">Don't have account/Create new</a> <a style="color: #6144a4" class="col-auto ml-2" href="">Access as a Guest</a>
     </div>
   <div class="form-check col-md-10 m-2 ml-4">
     <input type="checkbox" class="form-check-input" id="exampleCheck1">
     <label class="form-check-label" for="exampleCheck1" style="color: #001374">Check me out</label>
   </div>
+<video id="player" autoplay></video>
+<canvas id="canvas" width=320 height=240></canvas>
+  <button type="submit" id = "capture" class="btn btn-primary mb-2 ml-4" style="background-color: #001374; border-color: white">Submit </button>
 
-
-  <button type="submit" class="btn btn-primary mb-2 ml-4" style="background-color: #001374; border-color: white">Submit </button>
 </form>
     </div>
 </div>
+ <script type="module" src="https://unpkg.com/webcam-easy/dist/webcam-easy.min.js"></script>
+<script src = ../js/login.js></script>
 </body>
 </html>

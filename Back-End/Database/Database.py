@@ -15,6 +15,12 @@ class User(Model):
     class Meta:
         database = db
 
+class Images(Model):
+    emotionID = IntegerField()
+    userID = IntegerField()
+    image = Field
+    class Meta:
+        database=db
 
 class Emotions(Model):
     happy = FloatField()

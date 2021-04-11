@@ -1,18 +1,26 @@
 from peewee import *
 
+user = 'root'
+password = ''
+db_name = 'fast_api_emotion_detection'
+
+db = MySQLDatabase(db_name, user=user, password=password, host='78.31.188.217')
+
+
 class User(Model):
-        username = CharField()
-        password = CharField()
-        email = CharField()
-        class Meta:
-            database = Database.db
+    username = CharField()
+    password = CharField()
+    email = CharField()
+
+    class Meta:
+        database = db
 
 class Images(Model):
     emotionID = IntegerField()
     userID = IntegerField()
     image = Field
     class Meta:
-        database = Database.db
+        database=db
 
 class Emotions(Model):
     happy = FloatField()
@@ -22,17 +30,10 @@ class Emotions(Model):
     sad = FloatField()
     surprised = FloatField()
     feared = FloatField()
+
     class Meta:
-        database = Database.db
+        database = db
 
-class Database:
-    def __init__(self, user, password, db_name, host):
-        self.user = user
-        self.password = password
-        self.db_name = db_name
-        self.host = host
-        self.db = MySQLDatabase(db_name, user=user, password=password, host=host)
-    def start(self):
-        self.db.connect()
-        self.db.create_tables([User, Emotions])
 
+db.connect()
+db.create_tables([User, Emotions])

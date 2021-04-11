@@ -1,18 +1,20 @@
 from peewee import *
 
+
 class User(Model):
-        username = CharField()
-        password = CharField()
-        email = CharField()
-        class Meta:
-            database = Database.db
+    username = CharField()
+    password = CharField()
+    email = CharField()
+
+    class Meta:
+        database = db
 
 class Images(Model):
     emotionID = IntegerField()
     userID = IntegerField()
     image = Field
     class Meta:
-        database = Database.db
+        database=db
 
 class Emotions(Model):
     happy = FloatField()
@@ -22,7 +24,9 @@ class Emotions(Model):
     sad = FloatField()
     surprised = FloatField()
     feared = FloatField()
+
     class Meta:
+
         database = Database.db
 
 class Database:

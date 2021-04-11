@@ -3,7 +3,7 @@ from backend.db.database import DB
 import requests
 
 app = FastAPI()
-db = DB('root', "", 'fast_api_emotion_detection', '78.31.188.217')
+db = DB.getFirstInstance('root', "", 'fast_api_emotion_detection', '78.31.188.217')
 db.start()
 
 @app.get('/')

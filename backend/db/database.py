@@ -32,6 +32,7 @@ class Database:
         self.db_name = db_name
         self.host = host
         self.db = MySQLDatabase(db_name, user=user, password=password, host=host)
+        
     def start(self):
         self.db.connect()
         self.db.create_tables([User, Emotions])

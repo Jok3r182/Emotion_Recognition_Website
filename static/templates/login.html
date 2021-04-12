@@ -4,12 +4,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta charset="UTF-8">
     <title>Login / Sign up Form</title>
-    <link rel="stylesheet" href="./Main/main.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script type="module" src="https://unpkg.com/webcam-easy/dist/webcam-easy.min.js"></script>
 </head>
-<body style="background-image: url('../Images/background.gif');">
+<body style="background-image: url('/static/images/background.gif');">
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
@@ -36,7 +35,7 @@
                 <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
             </div>
             <div class="form-group m-2 ml-4">
-                <a href="register.html" style="color: #6144a4">Don't have account/Create new</a> <a
+                <a href="\register" style="color: #6144a4">Don't have account/Create new</a> <a
                     style="color: #6144a4" class="col-auto ml-2" href="">Access as a Guest</a>
             </div>
             <div class="form-check col-md-10 m-2 ml-4">
@@ -53,6 +52,6 @@
             <canvas id="canvas"></canvas>
     </div>
 </div>
-<script src=../js/login.js></script>
+<script src="{{url_for('static', path='/js/login.js')}}"></script>
 </body>
 </html>

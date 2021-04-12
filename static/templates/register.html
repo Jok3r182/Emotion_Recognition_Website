@@ -5,8 +5,10 @@
     <meta charset="UTF-8">
     <title>Login / Sign up Form</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{url_for('static', path='/css/style.css')}}">
 </head>
-<body style="background-image: url('static/images/background.gif');">
+
+<body class="background-gif">
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -14,28 +16,28 @@
 
 </div>
 <div class="row mt-md-5">
-    <div class="col-md-6 mx-auto" style="max-width: 500px">
-    <div class="col" style="font-size: 24pt; font-weight: bold; color: #001374">Registration</div>
+    <div class="col-md-4 mx-auto">
+    <div class="col h1 color-main"><strong>Registration</strong></div>
     <form>
       <div class="form-group col-md-10 m-2">
-          <label style="color: #001374" for="inputUsername4">Username</label>
+          <label class="color-main" for="inputUsername4">Username</label>
           <input type="email" class="form-control" id="inputUsername4" placeholder="Username">
         </div>
         <div class="form-group col-md-10 m-2">
-          <label style="color: #001374" for="inputEmail4">Email</label>
+          <label class="color-main" for="inputEmail4">Email</label>
           <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
-             <small id="emailHelp" class="form-text text-muted" style="color: #001374" >We'll never share your email with anyone else.</small>
+             <small id="emailHelp" class="form-text text-muted color-main" >We'll never share your email with anyone else.</small>
         </div>
         <div class="form-group col-md-10 m-2">
-          <label style="color: #001374" for="inputPassword4">Password</label>
+          <label class="color-main" for="inputPassword4">Password</label>
           <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
         </div>
            <div class="form-group col-md-10 m-2">
-          <label style="color: #001374" for="inputPassword4">Confirm Password</label>
+          <label class="color-main" for="inputPassword4">Confirm Password</label>
           <input type="password" class="form-control" id="inputPassword5" placeholder="Confirm Password">
         </div>
-      <button style="border-color: white; cursor: pointer; background-color: #001374;" type="submit"  class="btn btn-primary mt-2 ml-4">Sign up</button>
-      <button id="backToLogin" style="background-color: white;color: #001374;  cursor: pointer; border-color: #001374;" type="button" class="btn btn-primary mt-2 ml-4">Login</button>
+      <button type="submit" class="btn mt-2 ml-4 btn-main">Sign up</button>
+      <button id="backToLogin" type="button" class="btn mt-2 ml-4 btn-back">Login</button>
     </form>
     </div>
 </div>

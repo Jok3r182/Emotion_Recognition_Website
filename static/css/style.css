@@ -1,0 +1,23 @@
+.color-main{
+    color: #001374;
+}
+.color-highlight{
+    color: #6144a4;
+}
+.background-gif{
+    background-image: url('/static/images/background.gif');
+    background-repeat: no-repeat;
+    background-size: 100%, 100%;
+}
+.btn-main{
+    background-color: #001374; 
+    color: white; 
+    cursor: pointer;
+    border-color: white
+}
+.btn-back{
+    background-color: white;
+    color: #001374;  
+    cursor: pointer; 
+    border-color: #001374;
+}

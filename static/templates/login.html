@@ -7,8 +7,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.js"></script>
+    <link rel="stylesheet" href="{{url_for('static', path='/css/style.css')}}">
 </head>
-<body style="background-image: url('/static/images/background.gif');">
+
+<body class="background-gif"></body>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
@@ -20,31 +22,26 @@
         crossorigin="anonymous"></script>
 
 <div class="row mt-md-5">
-    <div class="col-md-6 mx-auto" style="max-width: 500px">
-        <div class="col" style="font-size: 24pt; font-weight: bold; color: #001374">Login</div>
+    <div class="col-md-4 mx-auto">
+        <div class="col h1 color-main"><strong>Login</strong></div>
         <form>
             <div class="form-group col-md-10 m-2">
-                <label for="exampleInputEmail1" style="color: #001374">Email address</label>
+                <label for="exampleInputEmail1" class="color-main">Email address</label>
                 <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
                        placeholder="Enter email">
-                <small id="emailHelp" class="form-text text-muted" style="color: #001374">We'll never share your email
+                <small id="emailHelp" class="form-text text-muted color-main">We'll never share your email
                     with anyone else.</small>
             </div>
             <div class="form-group col-md-10 m-2">
-                <label for="exampleInputPassword1" style="color: #001374">Password</label>
+                <label for="exampleInputPassword1" class="color-main">Password</label>
                 <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
             </div>
             <div class="form-group m-2 ml-4">
-                <a href="\register" style="color: #6144a4">Don't have account/Create new</a> <a
-                    style="color: #6144a4" class="col-auto ml-2" href="">Access as a Guest</a>
-            </div>
-            <div class="form-check col-md-10 m-2 ml-4">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                <label class="form-check-label" for="exampleCheck1" style="color: #001374">Check me out</label>
+                <a href="\register" class="color-highlight">Don't have account/Create new</a> <a
+                    class="col-auto ml-2 color-highlight" href="">Access as a Guest</a>
             </div>
 
-            <button type="button" onclick="takePicture()" id="capture" class="btn btn-primary mb-2 ml-4"
-                    style="background-color: #001374; border-color: white">Submit
+            <button type="button" onclick="takePicture()" id="capture" class="btn mb-2 ml-4 btn-main">Submit
             </button>
         </form>
             <div id="results"></div>

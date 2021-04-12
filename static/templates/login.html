@@ -6,7 +6,7 @@
     <title>Login / Sign up Form</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script type="module" src="https://unpkg.com/webcam-easy/dist/webcam-easy.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.js"></script>
 </head>
 <body style="background-image: url('/static/images/background.gif');">
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -43,15 +43,14 @@
                 <label class="form-check-label" for="exampleCheck1" style="color: #001374">Check me out</label>
             </div>
 
-            <button type="submit" id="capture" class="btn btn-primary mb-2 ml-4"
+            <button type="button" onclick="takePicture()" id="capture" class="btn btn-primary mb-2 ml-4"
                     style="background-color: #001374; border-color: white">Submit
             </button>
         </form>
-            <video id="video" autoplay></video>
-            <img id="img" src="">
-            <canvas id="canvas"></canvas>
+            <div id="results"></div>
+            <div id="snap"></div>
     </div>
 </div>
-<script src="{{url_for('static', path='/js/login.js')}}"></script>
+<script src="{{url_for('static', path='/js/faceCapture.js')}}"></script>
 </body>
 </html>

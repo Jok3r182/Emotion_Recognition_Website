@@ -8,6 +8,7 @@ os.environ['TF_XLA_FLAGS'] = '--tf_xla_enable_xla_devices'
 new_model = tf.keras.models.load_model("../Trained_Models/emotionDetection_InceptionV3.h5")
 faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
 
+
 def checkPictureEmotion(path, size):
     frame = cv2.imread(path)
     grayImg = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)

@@ -7,7 +7,7 @@
 .background-gif{
     background-image: url('/static/images/background.gif');
     background-repeat: no-repeat;
-    background-size: 100%, 100%;
+    background-size: cover;
 }
 .btn-main{
     background-color: #001374; 

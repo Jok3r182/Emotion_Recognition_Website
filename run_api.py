@@ -23,3 +23,8 @@ def index(request: Request):
 @app.get('/register')
 def index(request: Request):
     return templates.TemplateResponse("register.html", {"request": request})
+
+
+@app.get('/main')
+def index(request: Request):
+    return templates.TemplateResponse("main.html", {"request": request})

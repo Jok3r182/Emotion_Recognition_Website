@@ -14,10 +14,12 @@ templates = Jinja2Templates(directory="static/templates")
 db = DB.getFirstInstance('root', "", 'fast_api_emotion_detection', '78.31.188.217')
 db.start()
 
+
 @app.get('/')
 def index(request: Request):
-    return templates.TemplateResponse("login.html", {"request":request})
+    return templates.TemplateResponse("login.html", {"request": request})
+
 
 @app.get('/register')
 def index(request: Request):
-    return templates.TemplateResponse("register.html", {"request":request})
+    return templates.TemplateResponse("register.html", {"request": request})

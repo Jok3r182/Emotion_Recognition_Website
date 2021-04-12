@@ -6,18 +6,18 @@ class DB:
 
     @staticmethod
     def getInstance():
-        if DB.__instance == None:
+        if DB.__instance is None:
             raise Exception("Singleton has not been initialized yet")
         return DB.__instance
 
     @staticmethod
     def getFirstInstance(user, password, db_name, host):
-        if DB.__instance == None:
+        if DB.__instance is None:
             DB(user, password, db_name, host)
         return DB.__instance
 
     def __init__(self, user, password, db_name, host):
-        if DB.__instance != None:
+        if DB.__instance is not None:
             raise Exception("This class is a singleton!")
         else:
             self.user = user

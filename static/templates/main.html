@@ -1,9 +1,14 @@
-{% extends "layout.html" %}
-{% block title %}Main{% endblock %}
-{% block head %}
-{{ super() }}
+{% extends "layout-main.html" %}
+{% block nav %}Member{% endblock %}
+{% block nav_collapse %}
+<li class="nav-item">
+    <a class="nav-link" href="/">Profile</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="/">Log Out</a>
+</li>
 {% endblock %}
-{% block body %}
+{% block main_body %}
 <div class="row mt-md-5">
     <div class="col-4 m-0 justify-content-center">
         <img>

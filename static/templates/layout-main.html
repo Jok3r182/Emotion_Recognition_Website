@@ -4,7 +4,8 @@
 {{ super() }}
 {% endblock %}
 {% block body %}
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+<script>document.body.className = "background-gif"</script>
+<nav class="navbar navbar-expand-md navbar-dark background-navbar">
     <a class="navbar-brand abs" href="#">{% block nav %}{% endblock %}</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar">
         <span class="navbar-toggler-icon"></span>

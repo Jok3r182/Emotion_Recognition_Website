@@ -21,3 +21,12 @@
     cursor: pointer; 
     border-color: #001374;
 }
+.background-navbar{
+    background-color: #001374;
+}
+
+.title-page{
+    color: white;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: #001374;
+}

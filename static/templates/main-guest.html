@@ -9,12 +9,15 @@
 </li>
 {% endblock %}
 {% block main_body %}
-<div class="row h-100">
+
+<div class="row h-25">
     <div class="col-sm-12 my-auto">
         <div class="col-md-6 mx-auto">
             <h1 class="text-center title-page">Emotion Detector</h1>
         </div>
-  
     </div>
   </div>
+{% block input %}
+{{super()}}
+{% endblock %}
 {% endblock %}

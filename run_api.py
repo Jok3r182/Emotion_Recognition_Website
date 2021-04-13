@@ -33,3 +33,6 @@ def index(request: Request):
 @app.get('/guest')
 def index(request: Request):
     return templates.TemplateResponse("main-guest.html", {"request": request})
+
+
+

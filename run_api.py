@@ -6,6 +6,11 @@ from fastapi.staticfiles import StaticFiles
 from starlette.requests import Request
 from core.db.database import DB
 import requests
+SECRET_KEY = "966a2c7fe681ab441ef5efcb7ccdfcd19639c13fd6e923cde688617f2f528976"
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
+
+
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")

@@ -11,8 +11,7 @@ app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="static/templates")
 
-#78.31.188.217
-db = DB.getFirstInstance('root', "", 'fast_api_emotion_detection', '127.0.0.1')
+db = DB.getFirstInstance('root', "", 'fast_api_emotion_detection', '78.31.188.217')
 db.start()
 
 
@@ -29,6 +28,7 @@ def index(request: Request):
 @app.get('/main')
 def index(request: Request):
     return templates.TemplateResponse("main.html", {"request": request})
+
 
 @app.get('/guest')
 def index(request: Request):

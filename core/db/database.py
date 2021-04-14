@@ -1,65 +1,60 @@
-from peewee import *
+from tortoise.contrib.fastapi import register_tortoise
+from tortoise.models import Model
+from tortoise import fields
+from passlib.hash import bcrypt
+from tortoise.contrib.pydantic import pydantic_model_creator
 
-class User(Model):
-            username = CharField()
-            email = CharField()
-            password_hash = CharField()
-
-            @classmethod
-            async def get_user(cls, username):
-                return cls.get(username=username)
-
-            def verify_password(self, password):
-                return True
-
-class Images(Model):
-    emotionID = IntegerField()
-    userID = IntegerField()
-    image = Field
-
-class Emotions(Model):
-    date = DateField()
-    happy = FloatField()
-    angry = FloatField()
-    disgust = FloatField()
-    neutral = FloatField()
-    sad = FloatField()
-    surprised = FloatField()
-    feared = FloatField()
 
 class DB:
-    __instance = None
+    User_Pydantic = None
 
-    @staticmethod
-    def getInstance():
-        if DB.__instance is None:
-            raise Exception("Singleton has not been initialized yet")
-        return DB.__instance
+    def __init__(self, app, username, password, host, port, db_name):
+        DATABASE_URL = "mysql://{}:{}@{}:{}/{}".format(
+            username,
+            password,
+            host,
+            port,
+            db_name
+        )
+        register_tortoise(app,
+                          db_url=DATABASE_URL,
+                          modules={'models': ['core.db.database']},
+                          generate_schemas=True,
+                          add_exception_handlers=True)
+        DB.User_Pydantic = pydantic_model_creator(User, name='User')
 
-    @staticmethod
-    def getFirstInstance(user, password, db_name, host):
-        if DB.__instance is None:
-            DB(user, password, db_name, host)
-        return DB.__instance
-
-    def __init__(self, user, password, db_name, host):
-        if DB.__instance is not None:
-            raise Exception("This class is a singleton!")
-        else:
-            self.user = user
-            self.password = password
-            self.db_name = db_name
-            self.host = host
-            self.db = MySQLDatabase(self.db_name, user=self.user, password=self.password, host=self.host)
-            DB.__instance = self
-
-    def get_db(self):
-        return self.db
-
-    def start(self):
-        self.db.bind([User, Emotions, Images])
-        self.db.connect()
-        self.db.create_tables([User, Emotions])
+    async def authenticate_user(self, username, password):
+        user = await User.get(username=username)
+        if not user:
+            return False
+        if not user.verify_password(password):
+            return False
+        return user
 
 
+class User(Model):
+    id = fields.IntField(pk=True)
+    username = fields.CharField(50, unique=True)
+    email = fields.CharField(255)
+    password_hash = fields.CharField(128)
 
+    def verify_password(self, password):
+        return bcrypt.verify(password, self.password_hash)
+
+
+class Images(Model):
+    emotionID = fields.IntField()
+    userID = fields.IntField()
+    image = fields.Field
+
+
+class Emotions(Model):
+    id = fields.IntField(pk=True)
+    date = fields.DateField()
+    happy = fields.FloatField()
+    angry = fields.FloatField()
+    disgust = fields.FloatField()
+    neutral = fields.FloatField()
+    sad = fields.FloatField()
+    surprised = fields.FloatField()
+    feared = fields.FloatField()

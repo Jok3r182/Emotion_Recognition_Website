@@ -1,8 +1,4 @@
-from typing import Optional
-
 from peewee import *
-from pydantic import BaseModel
-
 
 
 class DB:
@@ -35,17 +31,17 @@ class DB:
         return self.db
 
     def start(self):
-        class Token(BaseModel):
-            access_token: str
-            token_type: str
-
-        class TokenData(BaseModel):
-            username: Optional[str] = None
-
         class User(Model):
             username = CharField()
             email = CharField()
-            is_active = BooleanField(default=True)
+            password_hash = CharField()
+
+            @classmethod
+            async def get_user(cls, username):
+                return cls.get(username=username)
+
+            def verify_password(self, password):
+                return True
 
             class Meta:
                 database = DB.getInstance().get_db()
@@ -71,8 +67,8 @@ class DB:
             class Meta:
                 database = DB.getInstance().get_db()
 
-        class UserInDB():
-            hashed_password: str
-
         self.db.connect()
         self.db.create_tables([User, Emotions])
+
+
+

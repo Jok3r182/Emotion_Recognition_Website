@@ -1,18 +1,17 @@
-from re import template
-from fastapi import FastAPI, UploadFile
-from fastapi.responses import HTMLResponse
+from fastapi import FastAPI, UploadFile, Depends
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from starlette.requests import Request
 from core.db.database import DB
-import requests
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+
 SECRET_KEY = "966a2c7fe681ab441ef5efcb7ccdfcd19639c13fd6e923cde688617f2f528976"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
-
-
 app = FastAPI()
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl='token')
+
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="static/templates")
 
@@ -31,8 +30,8 @@ def index(request: Request):
 
 
 @app.get('/main')
-def index(request: Request):
-    return templates.TemplateResponse("main.html", {"request": request})
+def index(request: Request, token: str = Depends(oauth2_scheme)):
+    return templates.TemplateResponse("main.html", {"request": request, 'the_token': token})
 
 
 @app.get('/guest')
@@ -40,4 +39,6 @@ def index(request: Request):
     return templates.TemplateResponse("main-guest.html", {"request": request})
 
 
-
+@app.post('/token')
+async def token(form_data: OAuth2PasswordRequestForm = Depends()):
+    return {'access_token': form_data.username + 'token'}

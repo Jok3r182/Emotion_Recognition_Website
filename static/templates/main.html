@@ -1,11 +1,15 @@
 {% extends "layout-main.html" %}
+{% block head %}
+{{ super() }}
+<script src="{{url_for('static', path='/js/main.js')}}"></script>
+{% endblock %}
 {% block nav %}Member{% endblock %}
 {% block nav_collapse %}
 <li class="nav-item">
-    <a class="nav-link" href="/">Profile</a>
+    <a class="nav-link" href="#">Profile</a>
 </li>
 <li class="nav-item">
-    <a class="nav-link" href="/">Log Out</a>
+    <a class="nav-link" href="#" id="aLogout">Log Out</a>
 </li>
 {% endblock %}
 {% block main_body %}
@@ -21,6 +25,4 @@
 <div class="row mt-12 justify-content-center">
         <p>chartas budit</p>
 </div>
-
-<script src="{{url_for('static', path='/js/faceCapture.js')}}"></script>
 {% endblock %}

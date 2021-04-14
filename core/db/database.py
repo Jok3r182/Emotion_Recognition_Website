@@ -1,5 +1,31 @@
 from peewee import *
 
+class User(Model):
+            username = CharField()
+            email = CharField()
+            password_hash = CharField()
+
+            @classmethod
+            async def get_user(cls, username):
+                return cls.get(username=username)
+
+            def verify_password(self, password):
+                return True
+
+class Images(Model):
+    emotionID = IntegerField()
+    userID = IntegerField()
+    image = Field
+
+class Emotions(Model):
+    date = DateField()
+    happy = FloatField()
+    angry = FloatField()
+    disgust = FloatField()
+    neutral = FloatField()
+    sad = FloatField()
+    surprised = FloatField()
+    feared = FloatField()
 
 class DB:
     __instance = None
@@ -31,42 +57,7 @@ class DB:
         return self.db
 
     def start(self):
-        class User(Model):
-            username = CharField()
-            email = CharField()
-            password_hash = CharField()
-
-            @classmethod
-            async def get_user(cls, username):
-                return cls.get(username=username)
-
-            def verify_password(self, password):
-                return True
-
-            class Meta:
-                database = DB.getInstance().get_db()
-
-        class Images(Model):
-            emotionID = IntegerField()
-            userID = IntegerField()
-            image = Field
-
-            class Meta:
-                database = DB.getInstance().get_db()
-
-        class Emotions(Model):
-            date = DateField()
-            happy = FloatField()
-            angry = FloatField()
-            disgust = FloatField()
-            neutral = FloatField()
-            sad = FloatField()
-            surprised = FloatField()
-            feared = FloatField()
-
-            class Meta:
-                database = DB.getInstance().get_db()
-
+        self.db.bind([User, Emotions, Images])
         self.db.connect()
         self.db.create_tables([User, Emotions])
 

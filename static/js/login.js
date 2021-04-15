@@ -1,5 +1,5 @@
-$(document).ready(function() {
-    $("#btnLogin").click(function(){
+$(document).ready(function () {
+    $("#btnLogin").click(function () {
         let username = document.getElementById("inputUsername").value
         let password = document.getElementById("inputPassword").value
         let data = new FormData()
@@ -11,14 +11,14 @@ $(document).ready(function() {
             processData: false,
             contentType: false,
             data: data,
-            success: function(response){
+            success: function (response) {
                 sessionStorage.setItem("access_token", response.access_token)
                 sessionStorage.setItem("token_type", response.token_type)
-                window.location.href="/main"
+                window.location.href = "/main"
             },
-            error: function(response){
+            error: function (response) {
                 alert("bad input")
-            } 
+            }
         })
-    }); 
+    });
 });

@@ -1,3 +1,4 @@
+from fastapi import Form
 from tortoise.contrib.fastapi import register_tortoise
 from tortoise.models import Model
 from tortoise import fields
@@ -33,7 +34,7 @@ class DB:
 
 
 class User(Model):
-    id = fields.IntField(pk=True)
+    id = fields.IntField(pk=True, index=True)
     username = fields.CharField(50, unique=True)
     email = fields.CharField(255)
     password_hash = fields.CharField(128)
@@ -49,7 +50,7 @@ class Images(Model):
 
 
 class Emotions(Model):
-    id = fields.IntField(pk=True)
+    id = fields.IntField(pk=True, index=True)
     date = fields.DateField()
     happy = fields.FloatField()
     angry = fields.FloatField()
@@ -58,3 +59,16 @@ class Emotions(Model):
     sad = fields.FloatField()
     surprised = fields.FloatField()
     feared = fields.FloatField()
+
+
+class UserForm:
+
+    def __init__(
+            self,
+            username: str = Form(...),
+            password: str = Form(...),
+            email: str = Form(...),
+    ):
+        self.username = username
+        self.password = password
+        self.email = email

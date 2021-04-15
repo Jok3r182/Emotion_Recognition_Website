@@ -2,9 +2,10 @@
 {% block title %}Home{% endblock %}
 {% block head %}
 {{ super() }}
+<script src="{{url_for('static', path='/js/upload.js')}}"></script>
 {% endblock %}
 {% block body %}
-<nav class="navbar navbar-expand-md navbar-dark background-navbar">
+<nav class="navbar navbar-expand-md navbar-dark background-navbar navbar-rounded shadow "  style="z-index: 100;">
     <a class="navbar-brand abs" href="#">{% block nav %}{% endblock %}</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar">
         <span class="navbar-toggler-icon"></span>
@@ -16,12 +17,56 @@
         </ul>
     </div>
 </nav>
+<div class="row h-100">
+    <div class="col-sm-12 my-5">
+        <div class="col-md-12 mx-auto">
+            <div class="row">
+                <div class="col-2">
+                  <div class="list-group" id="list-tab" role="tablist">
+                    <a class="list-group-item list-group-item-action active" id="list-upload-list" data-toggle="list" href="#list-upload" role="tab" aria-controls="upload">Upload</a>
+                    <a class="list-group-item list-group-item-action" id="list-camera-list" data-toggle="list" href="#list-camera" role="tab" aria-controls="camera">Camera</a>
+                  </div>
+                </div>
+                <div class="col-10">
+                  <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="list-upload" role="tabpanel" aria-labelledby="list-upload-list">
+                        <div class="row h-25">
+                            <p class="h2">Upload image to get results</p>
+                        </div>
+                        <div class="row h-25">
+                            <label for="myFiles">
+                                <input type="file" name="files" id="myFiles">
+                            </label>
+                        </div>
+                        <div class="row h-50">
+                            <div class="row h-100">
+                                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                                    <div class="carousel-inner">
+                                      <div class="carousel-item active">
+                                        <img class="d-block w-100 h-75" id="blah" src="#" alt="First slide">
+                                      </div>
+                                    </div>
+                                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                      <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                      <span class="sr-only">Next</span>
+                                    </a>
+                                  </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="list-camera" role="tabpanel" aria-labelledby="list-camera-list">
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+    </div>
+  </div>
 {% block main_body %}
 {% endblock %}
-{% endblock %}
-
-{% block input %}
-<label for="myFiles">
-    <input type="file" name="files" id="myFiles">
-</label>
 {% endblock %}

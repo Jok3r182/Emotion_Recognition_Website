@@ -45,11 +45,17 @@ body {
 }
 
 .background-navbar {
-    background-color: #001374;
+    background-color: #303447;
 }
 
 .title-page {
     color: white;
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: #001374;
+}
+
+.navbar {
+    -webkit-box-shadow: 0 12px 6px -6px #999;
+    -moz-box-shadow: 0 12px 6px -6px #999;
+    box-shadow: 0 8px 8px -2px #999;
 }

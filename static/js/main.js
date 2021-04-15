@@ -6,7 +6,6 @@ $(document).ready(function () {
             xhr.setRequestHeader('Authorization', sessionStorage.getItem("token_type") + " " + sessionStorage.getItem("access_token"));
         },
         success: function (response) {
-            console.log(response)
         },
         error: function (response) {
             sessionStorage.setItem("access_token", "")

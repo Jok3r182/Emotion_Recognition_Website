@@ -34,12 +34,23 @@
                             <p class="h2">Upload image to get results</p>
                         </div>
                         <div class="row h-25">
-                            <label for="myFiles">
+                          <div class="row" id="uploadImageRow">
+                            <div class="col-md-12">
+                              <label for="myFiles">
                                 <input type="file" name="files" id="myFiles">
-                            </label>
+                              </label>
+                            </div>
+                          </div>
+                          <div class="row" id="changeImageRow" style="display: none">
+                            <div class="col-md-12">
+                              <button type="button" id="btnChangeImg" class="btn mb-2 ml-4 btn-main">Change Image</button>
+                              <button type="button" id="btnGenerateResults" class="btn mb-2 ml-4 btn-main">Generate Results</button>
+                            </div>
+                          </div>
+
                         </div>
                         <div class="row h-50">
-                            <div class="row h-100">
+                            <div class="row h-75" id="resultsCarousel" style="display:none">
                                 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                                     <div class="carousel-inner">
                                       <div class="carousel-item active">

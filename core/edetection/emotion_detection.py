@@ -9,8 +9,8 @@ new_model = tf.keras.models.load_model("../Trained_Models/emotionDetection_Incep
 faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
 
 
-def checkPictureEmotion(path, size):
-    frame = cv2.imread(path)
+def checkPictureEmotion(img, size):
+    frame = img
     grayImg = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     faces = faceCascade.detectMultiScale(grayImg, 1.1, 4)
     for x, y, w, h in faces:
@@ -47,4 +47,4 @@ def checkPictureEmotion(path, size):
     print(predictions[0][x] * 100)
 
 
-checkPictureEmotion("../Emotion_Images/surprised1.jpg", 299)
+#checkPictureEmotion("../Emotion_Images/surprised1.jpg", 299)

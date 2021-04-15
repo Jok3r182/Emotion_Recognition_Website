@@ -17,7 +17,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl='token')
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="static/templates")
 #78.31.188.217
-database = DB(app, 'root', '', '127.0.0.1', '3306', 'fast_api_emotion_detection')
+database = DB(app, 'root', '', '78.31.188.217', '3306', 'fast_api_emotion_detection')
 
 
 async def get_current_user(token: str = Depends(oauth2_scheme)):
@@ -64,13 +64,16 @@ async def generate_token(form_data: OAuth2PasswordRequestForm = Depends()):
     token = jwt.encode(user_obj.dict(), JWT_SECRET_KEY)
     return {'access_token': token, 'token_type': 'bearer'}
 
+
 @app.get('/token/decode', response_model=database.User_Pydantic)
 async def get_user(user: database.User_Pydantic = Depends(get_current_user)):
     return user
 
 
-@app.post('/users', response_model=database.User_Pydantic)
+@app.post('/users')
 async def create_user(user: database.User_Pydantic):
     user_obj = User(username=user.username, password_hash=bcrypt.hash(user.password_hash), email=user.email)
     await user_obj.save()
-    return await database.User_Pydantic.from_tortoise_orm(user_obj)
+    user_auth = await database.User_Pydantic.from_tortoise_orm(user_obj)
+    token = jwt.encode(user_auth.dict(), JWT_SECRET_KEY)
+    return {'access_token': token, 'token_type': 'bearer'}

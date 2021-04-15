@@ -1,5 +1,9 @@
 {% extends "layout-main.html" %}
 {% block nav %}Guest{% endblock %}
+{% block head %}
+{{ super() }}
+<script src="{{url_for('static', path='/js/guest.js')}}"></script>
+{% endblock %}
 {% block nav_collapse %}
 <li class="nav-item">
     <a class="nav-link" href="/register">Register</a>
@@ -9,15 +13,4 @@
 </li>
 {% endblock %}
 {% block main_body %}
-
-<div class="row h-25">
-    <div class="col-sm-12 my-auto">
-        <div class="col-md-6 mx-auto">
-            <h1 class="text-center title-page">Emotion Detector</h1>
-        </div>
-    </div>
-  </div>
-{% block input %}
-{{super()}}
-{% endblock %}
 {% endblock %}

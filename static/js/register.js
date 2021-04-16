@@ -25,6 +25,9 @@ $(document).ready(function () {
             })
         }
     });
+    $("#btnToLogin").click(function(){
+        location.href = "/"
+    })
 });
 
 

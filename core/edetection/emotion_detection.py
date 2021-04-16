@@ -2,10 +2,9 @@ import numpy as np
 import cv2
 import tensorflow as tf
 import os
-
 os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
 os.environ['TF_XLA_FLAGS'] = '--tf_xla_enable_xla_devices'
-new_model = tf.keras.models.load_model("../Trained_Models/emotionDetection_InceptionV3.h5")
+new_model = tf.keras.models.load_model("core/tmodels/emotionDetection_InceptionV3.h5")
 faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
 
 
@@ -42,9 +41,7 @@ def checkPictureEmotion(img, size):
         status = "Pasišlykštėjęs"
     elif (np.argmax(predictions) == 6):
         status = "Piktas"
-    print(status)
     x = np.argmax(predictions)
-    print(predictions[0][x] * 100)
+    return "Nuotaika: " + status + "\n Tikimybė: "+str(predictions[0][x]*100)
 
-
-#checkPictureEmotion("../Emotion_Images/surprised1.jpg", 299)
+# checkPictureEmotion("../Emotion_Images/surprised1.jpg", 299)

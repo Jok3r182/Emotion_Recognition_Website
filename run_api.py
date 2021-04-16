@@ -6,7 +6,7 @@ from starlette.requests import Request
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from core.db.database import User, DB
 from passlib.hash import bcrypt
-from PIL import Image
+from core.edetection.emotion_detection import checkPictureEmotion
 import cv2
 import numpy as np
 import jwt
@@ -22,8 +22,6 @@ templates = Jinja2Templates(directory="static/templates")
 
 # 78.31.188.217
 database = DB(app, 'root', '', '127.0.0.1', '3306', 'fast_api_emotion_detection')
-
-
 
 
 async def get_current_user(token: str = Depends(oauth2_scheme)):
@@ -84,9 +82,9 @@ async def create_user(user: database.User_Pydantic):
     token = jwt.encode(user_auth.dict(), JWT_SECRET_KEY)
     return {'access_token': token, 'token_type': 'bearer'}
 
+
 @app.post("/api/predict")
 def predict_image(predict_image: UploadFile = File(...)):
     contents = predict_image.file.read()
     img_np = cv2.imdecode(np.frombuffer(contents, np.uint8), -1)
-    print(img_np)
-    return {"filename": predict_image.filename}
+    return checkPictureEmotion(img_np, 299)

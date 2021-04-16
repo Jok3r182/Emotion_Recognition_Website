@@ -1,15 +1,16 @@
-document.getElementById('results').style.display = "None"
-Webcam.set({
-    image_format: 'jpg'
-})
-
-Webcam.attach("#results")
-
-function takePicture()
-{
-    Webcam.snap(function (data_uri){
-       document.write("<img src='"+data_uri+"' alt='from canvas'/>")
+$(document).ready(function () {
+    document.getElementById('myCamera').style.display = "None"
+    Webcam.set({
+        image_format: 'jpg'
     })
-}
+
+    Webcam.attach("#myCamera")
+
+    function takePicture() {
+        Webcam.snap(function (data_uri) {
+            document.getElementById('yourImage').innerHTML = '<img src="' + data_uri + '"/>';
+        })
+    }
+})
 
 

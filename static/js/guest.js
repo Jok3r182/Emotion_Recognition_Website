@@ -6,14 +6,11 @@ $(document).ready(function () {
             xhr.setRequestHeader('Authorization', sessionStorage.getItem("token_type") + " " + sessionStorage.getItem("access_token"));
         },
         success: function (response) {
+            window.location.href = "/main"
         },
         error: function (response) {
-            sessionStorage.setItem("access_token", "")
-            window.location.href = "/guest"
         }
     })
-    $("#aLogout").click(function () {
-        sessionStorage.setItem("access_token", "")
-        window.location.href = "/"
-    });
+    document.getElementById("list-camera-list").classList += " disabled"
+    document.getElementById("list-camera-list").textContent = "Camera (For Members Only)"
 });

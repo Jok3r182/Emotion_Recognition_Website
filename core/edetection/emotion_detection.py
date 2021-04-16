@@ -2,46 +2,75 @@ import numpy as np
 import cv2
 import tensorflow as tf
 import os
+import json
 os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
 os.environ['TF_XLA_FLAGS'] = '--tf_xla_enable_xla_devices'
-new_model = tf.keras.models.load_model("core/tmodels/emotionDetection_InceptionV3.h5")
-faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
 
+class Face:
+    mapped_faces = {
+        0:"Feared",
+        1:"Happy",
+        2:"Sad",
+        3:"Neutral",
+        4:"Surprised",
+        5:"Disgusted",
+        6:"Angry"
+    }
 
-def checkPictureEmotion(img, size):
-    frame = img
-    grayImg = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    faces = faceCascade.detectMultiScale(grayImg, 1.1, 4)
-    for x, y, w, h in faces:
-        roi_gray = grayImg[y:y + h, x:x + w]
-        roi_color = frame[y:y + h, x:x + w]
-        cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
-        facess = faceCascade.detectMultiScale(roi_gray)
-        if len(facess) == 0:
-            print("Veidas nebuvo aptiktas")
-        else:
-            for (ex, ey, ew, eh) in facess:
-                face_roi = roi_color[ey:ey + eh, ex:ex + ew]
-    final_image = cv2.resize(face_roi, (size, size))
-    final_image = np.expand_dims(final_image, axis=0)
-    final_image = final_image / 255.0
-    predictions = new_model.predict(final_image)
+    def __init__(self):
+        
+        self.emotions = {
+            "Feared":0,
+            "Happy":0,
+            "Sad":0,
+            "Neutral":0,
+            "Surprised":0,
+            "Disgusted":0,
+            "Angry":0
+        }
+        self.predicted_emotion = None
+        self.face_coords = None
 
-    if (np.argmax(predictions) == 0):
-        status = "Išsigandęs"
-    elif (np.argmax(predictions) == 1):
-        status = "Linksmas"
-    elif (np.argmax(predictions) == 2):
-        status = "Liūdnas"
-    elif (np.argmax(predictions) == 3):
-        status = "Neutralus"
-    elif (np.argmax(predictions) == 4):
-        status = "Nustebęs"
-    elif (np.argmax(predictions) == 5):
-        status = "Pasišlykštėjęs"
-    elif (np.argmax(predictions) == 6):
-        status = "Piktas"
-    x = np.argmax(predictions)
-    return "Nuotaika: " + status + "\n Tikimybė: "+str(predictions[0][x]*100)
+    def setCoords(self, coords):
+        self.face_coords = coords
+    def setPredicted(self,prediction):
+        self.predicted_emotion = Face.mapped_faces[prediction]
+    def setProbability(self, index, probability):
+        self.emotions[self.mapped_faces[index]] = probability
 
-# checkPictureEmotion("../Emotion_Images/surprised1.jpg", 299)
+class EmotionDetector:
+    def __init__(self):
+        self.new_model = tf.keras.models.load_model("core/tmodels/emotionDetection_InceptionV3.h5")
+        self.faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+
+    def getFacesInPicture(self, img):
+        grayImg = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        faces = self.faceCascade.detectMultiScale(grayImg, 1.1, 4)
+        return faces
+    
+    def getEmotionFromFace(self, img, size):
+        final_image = cv2.resize(img, (size, size))
+        final_image = np.expand_dims(final_image, axis=0)
+        final_image = final_image / 255.0
+        predictions = self.new_model.predict(final_image)
+        return predictions
+
+    def getProcessedFace(self, face, img, size):
+        new_face = Face()
+        new_face.setCoords(face)
+        predictions = self.getEmotionFromFace(img, size)
+        for count, value in enumerate(predictions[0]):
+            new_face.setProbability(count, float(value))
+        predicted = np.argmax(predictions)
+        new_face.setPredicted(predicted)
+        return new_face
+
+    def getAllEmotionsFromPicture(self, img):
+        faces = self.getFacesInPicture(img)
+        frame = img
+        face_list = []
+        for (x, y, w, h) in faces:
+            roi_color = frame[y:y + h, x:x + w]
+            face_list.append(self.getProcessedFace([float(x), float(y), float(w), float(h)], roi_color, 299))
+        return face_list
+        

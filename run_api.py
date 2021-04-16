@@ -6,16 +6,18 @@ from starlette.requests import Request
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from core.db.database import User, DB
 from passlib.hash import bcrypt
-from core.edetection.emotion_detection import checkPictureEmotion
+from core.edetection.emotion_detection import EmotionDetector
 import cv2
 import numpy as np
 import jwt
+import json
 
 JWT_SECRET_KEY = "966a2c7fe681ab441ef5efcb7ccdfcd19639c13fd6e923cde688617f2f528976"
 ALGORITHM = "HS256"
 
 app = FastAPI()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl='token')
+emotion_detector = EmotionDetector()
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="static/templates")
@@ -87,4 +89,8 @@ async def create_user(user: database.User_Pydantic):
 def predict_image(predict_image: UploadFile = File(...)):
     contents = predict_image.file.read()
     img_np = cv2.imdecode(np.frombuffer(contents, np.uint8), -1)
-    return checkPictureEmotion(img_np, 299)
+    faces = emotion_detector.getAllEmotionsFromPicture(img_np)
+    faces_to_send = []
+    for face in faces:
+        faces_to_send.append(face.__dict__)
+    return {'processed_faces':json.dumps(faces_to_send)}

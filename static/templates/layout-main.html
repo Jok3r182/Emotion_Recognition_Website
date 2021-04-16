@@ -19,76 +19,71 @@
     </div>
 </nav>
 <div class="row h-100">
-    <div class="col-sm-12 my-5">
-        <div class="col-md-12 mx-auto">
-            <div class="row">
-                <div class="col-2">
-                    <div class="list-group" id="list-tab" role="tablist">
-                        <a class="list-group-item list-group-item-action active" id="list-upload-list"
-                           data-toggle="list" href="#list-upload" role="tab" aria-controls="upload">Upload</a>
-                        <a class="list-group-item list-group-item-action" id="list-camera-list" data-toggle="list"
-                           href="#list-camera" role="tab" aria-controls="camera">Camera</a>
+    <div class="col-md-12 mx-auto my-5">
+        <div class="row">
+            <div class="col-2">
+                <div class="list-group" id="list-tab" role="tablist">
+                    <a class="list-group-item list-group-item-action active" id="list-upload-list"
+                        data-toggle="list" href="#list-upload" role="tab" aria-controls="upload">Upload</a>
+                    <a class="list-group-item list-group-item-action" id="list-camera-list" data-toggle="list"
+                        href="#list-camera" role="tab" aria-controls="camera">Camera</a>
+                </div>
+
+            </div>
+            <div class="col-10">
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="list-upload" role="tabpanel"
+                            aria-labelledby="list-upload-list">
+                        <div class="row h-25">
+                            <p class="h2">Upload image to get results</p>
+                        </div>
+                        <div class="row h-25">
+                            <div class="row" id="uploadImageRow">
+                                <div class="col-md-12">
+                                    <label for="myFiles">
+                                        <input type="file" name="files" id="myFiles">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row" id="changeImageRow" style="display: none">
+                                <div class="col-md-12">
+                                    <button type="button" id="btnChangeImg" class="btn mb-2 ml-4 btn-main">Change
+                                        Image
+                                    </button>
+                                    <button type="button" id="btnGenerateResults" class="btn mb-2 ml-4 btn-main">
+                                        Generate Results
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="list-camera" role="tabpanel" aria-labelledby="list-camera-list">
+                        <div id="myCamera"></div>
+                        <div id="yourImage"></div>
+                        <button type="button" onclick="takePicture()" id="capture" class="btn btn-back">Capture your
+                            emotion.
+                        </button>
                     </div>
                 </div>
-                <div class="col-10">
-                    <div class="tab-content" id="nav-tabContent">
-                        <div class="tab-pane fade show active" id="list-upload" role="tabpanel"
-                             aria-labelledby="list-upload-list">
-                            <div class="row h-25">
-                                <p class="h2">Upload image to get results</p>
-                            </div>
-                            <div class="row h-25">
-                                <div class="row" id="uploadImageRow">
-                                    <div class="col-md-12">
-                                        <label for="myFiles">
-                                            <input type="file" name="files" id="myFiles">
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="row" id="changeImageRow" style="display: none">
-                                    <div class="col-md-12">
-                                        <button type="button" id="btnChangeImg" class="btn mb-2 ml-4 btn-main">Change
-                                            Image
-                                        </button>
-                                        <button type="button" id="btnGenerateResults" class="btn mb-2 ml-4 btn-main">
-                                            Generate Results
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div class="row h-50">
-                                    <div class="row h-75" id="resultsCarousel" style="display:none">
-                                        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-                                            <div class="carousel-inner">
-                                                <div class="carousel-item active">
-                                                    <img class="d-block w-100 h-75" id="blah" src="#" alt="First slide">
-                                                </div>
-                                            </div>
-                                            <a class="carousel-control-prev" href="#carouselExampleControls"
-                                               role="button" data-slide="prev">
-                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                <span class="sr-only">Previous</span>
-                                            </a>
-                                            <a class="carousel-control-next" href="#carouselExampleControls"
-                                               role="button" data-slide="next">
-                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                <span class="sr-only">Next</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="nuotaika" class="font-weight-light" style="display: none">
-                            </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 mx-auto">
+                <div class="row" id="resultsTabs" style="display:none">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
+                            <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</a>
+                            <a class="nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a>
                         </div>
-                        <div class="tab-pane fade" id="list-camera" role="tabpanel" aria-labelledby="list-camera-list">
-                            <div id='myCamera' ></div>
-                            <div id="yourImage"></div>
-                            <button type="button" id="capture"  onclick="takePicture()" class="btn btn-back">Capture your
-                                emotion.
-                            </button>
+                        </nav>
+                        <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                            <img class="img-fluid"id="blah" src="#" alt="First slide">
                         </div>
-                    </div>
+                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
+                        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
+                        </div>
                 </div>
             </div>
         </div>

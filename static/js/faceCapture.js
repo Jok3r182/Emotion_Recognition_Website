@@ -1,6 +1,9 @@
-Webcam.set({
-    image_format: 'jpg'
-})
+
+$(document).ready(function () {
+    document.getElementById('myCamera').style.display = "none"
+    Webcam.set({
+        image_format: 'jpg'
+    })
 
 Webcam.attach("#myCamera")
 

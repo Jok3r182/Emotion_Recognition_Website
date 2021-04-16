@@ -70,7 +70,7 @@ function testConfirmPassword() {
         passwordCheck.innerText = 'Passwords doesnt match.'
         bool = 0
     }
-    if (confirmPassword.value ==='') {
+    if (confirmPassword.value === '') {
         confirmPassword.style.borderColor = 'red'
         passwordCheck.classList = 'visible warning-color'
         passwordCheck.innerText = 'Confirm password is empty.'
@@ -79,16 +79,31 @@ function testConfirmPassword() {
     return bool;
 }
 
+function validateEmail(mail)
+{
+ return /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(mail);
+
+}
+
 function testEmail() {
     let email = document.getElementById('inputEmail4')
     let emailCheck = document.getElementById('warningEmail')
     let bool = 1
+
+    if (!validateEmail(email.value)) {
+        email.style.borderColor = 'red'
+        emailCheck.classList = 'visible warning-color'
+        emailCheck.innerText = 'This is not an email.'
+        bool = 0
+    }
     if (email.value === '') {
         email.style.borderColor = 'red'
         emailCheck.classList = 'visible warning-color'
         emailCheck.innerText = 'Email is too short.'
         bool = 0
     }
+
+
     return bool
 }
 

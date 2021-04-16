@@ -1,4 +1,4 @@
-from fastapi import FastAPI, UploadFile, Depends, HTTPException, File
+from fastapi import FastAPI, UploadFile, Depends, HTTPException, File, Body
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from starlette import status
@@ -8,6 +8,7 @@ from core.db.database import User, DB
 from passlib.hash import bcrypt
 from core.edetection.emotion_detection import EmotionDetector
 import cv2
+from datauri import DataURI
 import numpy as np
 import jwt
 import json
@@ -58,6 +59,11 @@ def index(request: Request):
     return templates.TemplateResponse("main-guest.html", {"request": request})
 
 
+@app.get('/profile')
+def index(request: Request):
+    return templates.TemplateResponse("profile.html", {"request": request})
+
+
 @app.post('/token')
 async def generate_token(form_data: OAuth2PasswordRequestForm = Depends()):
     user = await database.authenticate_user(form_data.username, form_data.password)
@@ -93,4 +99,6 @@ def predict_image(predict_image: UploadFile = File(...)):
     faces_to_send = []
     for face in faces:
         faces_to_send.append(face.__dict__)
-    return {'processed_faces':json.dumps(faces_to_send)}
+    return {'processed_faces': json.dumps(faces_to_send)}
+
+

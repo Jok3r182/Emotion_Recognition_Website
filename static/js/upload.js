@@ -23,6 +23,7 @@ $(document).ready(function () {
       if(readURL(this)){
         $("#changeImageRow").css("display","block");
         $("#uploadImageRow").css("display","none");
+        $("#nuotaika").css("display", "block")
       }
       else{
         document.getElementById("myFiles").value = null;
@@ -34,10 +35,12 @@ $(document).ready(function () {
       $("#uploadImageRow").css("display","block")
       $("#resultsCarousel").css("display","none")
       $("#changeImageRow").css("display","none");
+      $("#nuotaika").css("display", "none")
     })
 
     $("#btnGenerateResults").click(function(){
       $("#resultsCarousel").css("display","block")
+      let pictureEmotion = document.getElementById('nuotaika')
       let data = new FormData()
       data.append('predict_image', document.getElementById("myFiles").files[0])
       $.ajax({
@@ -47,7 +50,7 @@ $(document).ready(function () {
         contentType: false,
         data: data,
         success: function (response) {
-             console.log(response.filename)
+             pictureEmotion.innerText = response
         },
         error: function (response) {
             alert(response)

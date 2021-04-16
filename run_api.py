@@ -16,7 +16,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl='token')
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="static/templates")
-#78.31.188.217
+# 78.31.188.217
 database = DB(app, 'root', '', '78.31.188.217', '3306', 'fast_api_emotion_detection')
 
 

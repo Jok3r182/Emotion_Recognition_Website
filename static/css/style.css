@@ -48,6 +48,10 @@ body {
     background-color: #001374;
 }
 
+.warning-color{
+    color: red;
+}
+
 .title-page {
     color: white;
     -webkit-text-stroke-width: 1px;

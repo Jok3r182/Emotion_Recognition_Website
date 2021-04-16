@@ -33,13 +33,13 @@ $(document).ready(function () {
     $("#btnChangeImg").click(function(){
       document.getElementById("myFiles").value = null;
       $("#uploadImageRow").css("display","block")
-      $("#resultsCarousel").css("display","none")
+      $("#resultsTabs").css("display","none")
       $("#changeImageRow").css("display","none");
       $("#nuotaika").css("display", "none")
     })
 
     $("#btnGenerateResults").click(function(){
-      $("#resultsCarousel").css("display","block")
+      $("#resultsTabs").css("display","block")
       let pictureEmotion = document.getElementById('nuotaika')
       let data = new FormData()
       data.append('predict_image', document.getElementById("myFiles").files[0])
@@ -50,7 +50,11 @@ $(document).ready(function () {
         contentType: false,
         data: data,
         success: function (response) {
-             pictureEmotion.innerText = response
+          let obj = JSON.parse(response.processed_faces)
+          obj.forEach(element => {
+            console.log(element.emotions)
+            console.log("Predicted: "+element.predicted_emotion+", with: "+element.emotions[element.predicted_emotion]*100+"%")
+          });
         },
         error: function (response) {
             alert(response)

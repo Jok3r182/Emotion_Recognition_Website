@@ -3,7 +3,7 @@
 {% block head %}
 {{ super() }}
 <script src="{{url_for('static', path='/js/upload.js')}}"></script>
-<script src="{{url_for('static', path='/js/faceCapture.js')}}"></script>
+
 {% endblock %}
 {% block body %}
 <nav class="navbar navbar-expand-md navbar-dark background-navbar navbar-rounded shadow " style="z-index: 100;">
@@ -24,16 +24,16 @@
             <div class="col-2">
                 <div class="list-group" id="list-tab" role="tablist">
                     <a class="list-group-item list-group-item-action active" id="list-upload-list"
-                        data-toggle="list" href="#list-upload" role="tab" aria-controls="upload">Upload</a>
+                       data-toggle="list" href="#list-upload" role="tab" aria-controls="upload">Upload</a>
                     <a class="list-group-item list-group-item-action" id="list-camera-list" data-toggle="list"
-                        href="#list-camera" role="tab" aria-controls="camera">Camera</a>
+                       href="#list-camera" role="tab" aria-controls="camera">Camera</a>
                 </div>
 
             </div>
             <div class="col-10">
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="list-upload" role="tabpanel"
-                            aria-labelledby="list-upload-list">
+                         aria-labelledby="list-upload-list">
                         <div class="row h-25">
                             <p class="h2">Upload image to get results</p>
                         </div>
@@ -60,9 +60,10 @@
                     <div class="tab-pane fade" id="list-camera" role="tabpanel" aria-labelledby="list-camera-list">
                         <div id="myCamera"></div>
                         <div id="yourImage"></div>
-                        <button type="button" onclick="takePicture()" id="capture" class="btn btn-back">Capture your
+                        <button type="button" id="capture" onclick="takePicture()" class="btn btn-back">Capture your
                             emotion.
                         </button>
+
                     </div>
                 </div>
             </div>
@@ -72,18 +73,26 @@
                 <div class="row" id="resultsTabs" style="display:none">
                     <nav>
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                            <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
-                            <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</a>
-                            <a class="nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a>
+                            <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+                               aria-controls="nav-home" aria-selected="true">Home</a>
+                            <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
+                               aria-controls="nav-profile" aria-selected="false">Profile</a>
+                            <a class="nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab"
+                               aria-controls="nav-contact" aria-selected="false">Contact</a>
                         </div>
-                        </nav>
-                        <div class="tab-content" id="nav-tabContent">
-                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                            <img class="img-fluid"id="blah" src="#" alt="First slide">
+                    </nav>
+                    <div class="tab-content" id="nav-tab-Content">
+                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                             aria-labelledby="nav-home-tab">
+                            <img class="img-fluid" id="blah" src="#" alt="First slide">
                         </div>
-                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
-                        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
+                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                            ...
                         </div>
+                        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                            ...
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -92,4 +101,5 @@
 
 {% block main_body %}
 {% endblock %}
+<script src="{{url_for('static', path='/js/faceCapture.js')}}"></script>
 {% endblock %}

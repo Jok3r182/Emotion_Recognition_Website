@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block title %}Login / Sign up Form{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block body %}
+<div class="row mt-md-5">
+    <div class="col-md-8 mx-auto">
+        <div class="col h1 color-main"><strong>Profile</strong></div>
+        <form>
+            <div class="form-group col-md-10 m-2 " id="usernameForm">
+                <label class="color-main" for="token">Your Access Token</label>
+                <input type="text" class="form-control" id="token" placeholder="Your token">
+            </div>
+             <button type="button" id="btnBackToMain" class="btn mt-2 ml-4 btn-main">Back to main</button>
+        </form>
+    </div>
+</div>
+<script src="{{url_for('static', path='/js/profile.js')}}"></script>
+{% endblock %}

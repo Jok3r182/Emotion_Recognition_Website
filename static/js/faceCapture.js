@@ -22,17 +22,45 @@ function takePicture() {
             success: function (response) {
                 console.log(response)
                 let obj = JSON.parse(response.processed_faces)
-                obj.forEach(element => {
-                    console.log(element.emotions)
-                    console.log("Predicted: " + element.predicted_emotion + ", with: " + element.emotions[element.predicted_emotion] * 100 + "%")
-                });
+                drawChart(obj)
             },
             error: function (response) {
                 console.log(response)
             }
         })
+
     })
 
+}
+
+function drawChart(obj) {
+    let labels = []
+    let data = []
+    obj.forEach(element => {
+        for (let x in element.emotions) {
+            labels.push(x)
+            data.push(element.emotions[x] * 100)
+        }
+    });
+    var ctx = document.getElementById('chart').getContext('2d');
+    var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'bar',
+
+        // The data for our dataset
+        data: {
+            labels: labels,
+            datasets: [{
+                label: "Your emotion distribution in %",
+                backgroundColor: '#001374',
+                borderColor: 'black',
+                data: data,
+            }]
+        },
+
+        // Configuration options go here
+        options: {}
+    })
 }
 
 function dataURLtoFile(dataurl, filename) {

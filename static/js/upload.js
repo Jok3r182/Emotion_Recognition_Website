@@ -37,25 +37,32 @@ $(document).ready(function () {
     })
 
     $("#btnGenerateResults").click(function () {
-        $("#resultsTabs").css("display", "block")
-        let pictureEmotion = document.getElementById('nuotaika')
         let data = new FormData()
         data.append('predict_image', document.getElementById("myFiles").files[0])
-        $.ajax({
-            type: "POST",
-            url: "/api/predict",
-            processData: false,
-            contentType: false,
-            data: data,
-            success: function (response) {
-                let obj = JSON.parse(response.processed_faces)
-                drawChart(obj)
-            },
-            error: function (response) {
-                console.log(response)
-            }
-        })
+        if (document.getElementById("list-camera-list").textContent === "Camera (For Members Only)") {
+            $.ajax({
+                type: "POST",
+                url: "/api/dimensions",
+                processData: false,
+                contentType: false,
+                data: data,
+                success: function (response) {
+                    let dimensions = JSON.parse(response.image_dimensions)
 
+                    if (checkPictureDimensions(dimensions[0], dimensions[1])) {
+                        generateResults(data)
+                    } else {
+                        alert("Your picture is bigger than 480x720")
+                    }
+                },
+                error: function (response) {
+                    console.log(response)
+                }
+            })
+        } else {
+            console.log(sessionStorage.getItem('access_token').value)
+            generateResults(data)
+        }
     })
 
     function drawChart(obj) {
@@ -105,7 +112,6 @@ $(document).ready(function () {
                 }
             }
         })
-
     }
 
     function getRandomColor() {
@@ -116,4 +122,27 @@ $(document).ready(function () {
         }
         return color;
     }
+
+    function checkPictureDimensions(x, y) {
+        return x < 480 && y < 720
+    }
+
+    function generateResults(data) {
+        $("#resultsTabs").css("display", "block")
+        $.ajax({
+            type: "POST",
+            url: "/api/predict",
+            processData: false,
+            contentType: false,
+            data: data,
+            success: function (response) {
+                let obj = JSON.parse(response.processed_faces)
+                drawChart(obj)
+            },
+            error: function (response) {
+                console.log(response)
+            }
+        })
+    }
+
 });

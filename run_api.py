@@ -102,3 +102,8 @@ def predict_image(predict_image: UploadFile = File(...)):
     return {'processed_faces': json.dumps(faces_to_send)}
 
 
+@app.post("/api/dimensions")
+def check_dimensions(predict_image: UploadFile = File(...)):
+    contents = predict_image.file.read()
+    image = cv2.imdecode(np.frombuffer(contents, np.uint8), -1)
+    return {'image_dimensions': json.dumps(image.shape)}

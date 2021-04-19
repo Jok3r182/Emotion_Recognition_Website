@@ -49,7 +49,7 @@ class EmotionDetector:
 
     def getFacesInPicture(self, img):
         grayImg = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        faces = self.faceCascade.detectMultiScale(grayImg, 1.1, 4)
+        faces = self.faceCascade.detectMultiScale(grayImg, 1.2, 6)
         return faces
 
     def getEmotionFromFace(self, img, size):

@@ -40,10 +40,10 @@ function testUsername() {
     let usernameCheck = document.getElementById("warningUsername")
     let bool = 1
 
-    if (username.value.length < 8) {
+    if (username.value.length < 5) {
         username.style.borderColor = 'red'
         usernameCheck.classList = 'visible warning-color'
-        usernameCheck.innerText = 'Username is too short.'
+        usernameCheck.innerText = 'Username is too short. At least 5 symbols'
         bool = 0
     }
     return bool;
@@ -56,7 +56,7 @@ function testPassword() {
     if (password.value.length < 8) {
         password.style.borderColor = 'red'
         passwordCheck.classList = 'visible warning-color'
-        passwordCheck.innerText = 'Password is too short.'
+        passwordCheck.innerText = 'Password is too short. It should be at least 8 symbols'
         bool = 0
     }
     return bool;

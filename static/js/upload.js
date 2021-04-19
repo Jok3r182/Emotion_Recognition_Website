@@ -9,7 +9,7 @@ $(document).ready(function () {
                 return false
             } else {
                 reader.onload = function (e) {
-                    $('#blah').attr('src', e.target.result);
+                    $('#imgResults').attr('src', e.target.result);
                 }
                 reader.readAsDataURL(file);
 
@@ -59,33 +59,61 @@ $(document).ready(function () {
     })
 
     function drawChart(obj) {
-        let labels = []
-        let data = []
+        let labels = ["Feared",
+            "Happy",
+            "Sad",
+            "Neutral",
+            "Surprised",
+            "Disgusted",
+            "Angry"]
+
+        let datasets = []
+        let i = 0
         obj.forEach(element => {
+            let data = []
             for (let x in element.emotions) {
-                labels.push(x)
                 data.push(element.emotions[x] * 100)
             }
+            let temp = {
+                label: i + ' Person',
+                data: data,
+                backgroundColor: getRandomColor(),
+            }
+            datasets.push(temp)
+            i++
         });
         var ctx = document.getElementById('chart').getContext('2d');
         var chart = new Chart(ctx, {
-                // The type of chart we want to create
-                type: 'bar',
+            // The type of chart we want to create
+            type: 'bar',
 
-                // The data for our dataset
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: "Your emotion distribution in %",
-                        backgroundColor: '#001374',
-                        borderColor: 'black',
-                        data: data,
+            // The data for our dataset
+            data: {
+                labels: labels,
+                datasets: datasets
+            },
+
+            // Configuration options go here
+            options: {
+                scales: {
+                    xAxes: [{
+                        stacked: true // this should be set to make the bars stacked
+                    }],
+                    yAxes: [{
+                        stacked: true // this also..
                     }]
-                },
+                }
+            }
+        })
 
-                // Configuration options go here
-                options: {}
-            })
+    }
 
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
     }
 });

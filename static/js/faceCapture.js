@@ -6,9 +6,13 @@ Webcam.set({
 Webcam.attach("#myCamera")
 
 function takePicture() {
-    let personImage
+
     Webcam.snap(function (data_uri) {
-        personImage = document.getElementById('yourImage').innerHTML = '<img height="500" width="500" src="' + data_uri + '"/>';
+        document.getElementById('yourImage').style.display = 'none';
+        document.getElementById('imgResults').src = data_uri
+        $("#resultsTabs").css("display", "block")
+        $("#captureImage").css("display", 'none')
+        $("#anotherImage").css("display", "block")
         let img = dataURLtoFile(data_uri, 'personImg.jpeg')
         let data = new FormData()
         document.getElementById('myCamera').style.display = 'none'

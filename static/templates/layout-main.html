@@ -60,9 +60,22 @@
                     <div class="tab-pane fade" id="list-camera" role="tabpanel" aria-labelledby="list-camera-list">
                         <div id="myCamera"></div>
                         <div id="yourImage"></div>
-                        <button type="button" id="capture" onclick="takePicture()" class="btn btn-back">Capture your
-                            emotion.
-                        </button>
+                        <div class="row h-25">
+                            <div class="row" id="captureImage">
+                                <button type="button" id="capture" onclick="takePicture()" class="btn btn-back">Capture
+                                    your
+                                    emotion.
+                                </button>
+                            </div>
+                            <div class="row" id="anotherImage" style="display: none">
+                                <div class="col-md-12">
+                                    <button type="button" id="captureAnother" onclick="takePicture()" class="btn btn-back">
+                                        Take another picture.
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
 
                     </div>
                 </div>
@@ -77,20 +90,15 @@
                                aria-controls="nav-home" aria-selected="true">Your image</a>
                             <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
                                aria-controls="nav-profile" aria-selected="false">Emotion distribution Chart</a>
-                            <a class="nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab"
-                               aria-controls="nav-contact" aria-selected="false">Contact</a>
                         </div>
                     </nav>
                     <div class="tab-content" id="nav-tab-Content">
                         <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
                              aria-labelledby="nav-home-tab">
-                            <img class="img-fluid" id="blah" src="#" alt="First slide">
+                            <img class="img-fluid" id="imgResults" src="#" alt="First slide">
                         </div>
                         <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                             <canvas id="chart"></canvas>
-                        </div>
-                        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                            ...
                         </div>
                     </div>
                 </div>

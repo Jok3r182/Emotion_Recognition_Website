@@ -38,6 +38,9 @@ function takePicture() {
 }
 
 function drawChart(obj) {
+    let canvas = document.getElementById('chart')
+    const context = canvas.getContext('2d');
+    context.clearRect(0, 0, canvas.width, canvas.height);
     let labels = []
     let data = []
     obj.forEach(element => {

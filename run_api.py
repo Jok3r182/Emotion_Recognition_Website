@@ -8,7 +8,6 @@ from core.db.database import User, DB
 from passlib.hash import bcrypt
 from core.edetection.emotion_detection import EmotionDetector
 import cv2
-from datauri import DataURI
 import numpy as np
 import jwt
 import json
@@ -31,6 +30,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
     try:
         payload = jwt.decode(token, JWT_SECRET_KEY, algorithms=[ALGORITHM])
         user = await User.get(id=payload.get('id'))
+
     except:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -104,6 +104,9 @@ def predict_image(predict_image: UploadFile = File(...)):
 
 @app.post("/api/dimensions")
 def check_dimensions(predict_image: UploadFile = File(...)):
+    dim_check = False
     contents = predict_image.file.read()
     image = cv2.imdecode(np.frombuffer(contents, np.uint8), -1)
-    return {'image_dimensions': json.dumps(image.shape)}
+    if image.shape[0] < 480 and image.shape[1] < 720:
+        dim_check = True
+    return {'image_dimensions': dim_check}

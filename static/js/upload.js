@@ -1,6 +1,4 @@
-
 $(document).ready(function () {
-    let chart
     function readURL(input) {
         if (input.files && input.files[0]) {
             let file = input.files[0]
@@ -40,34 +38,41 @@ $(document).ready(function () {
     $("#btnGenerateResults").click(function () {
         let data = new FormData()
         data.append('predict_image', document.getElementById("myFiles").files[0])
-        if (document.getElementById("list-camera-list").textContent === "Camera (For Members Only)") {
-            $.ajax({
-                type: "POST",
-                url: "/api/dimensions",
-                processData: false,
-                contentType: false,
-                data: data,
-                success: function (response) {
-                    let dimensions = JSON.parse(response.image_dimensions)
-                    if (dimensions) {
-                        generateResults(data)
-                    } else {
-                        alert("Your picture is bigger than 480x720")
-                    }
-                },
-                error: function (response) {
-                    console.log(response)
-                }
-            })
-        } else {
-            generateResults(data)
+        $("#resultsTabs").css("display", "block")
+        url = "/api/guest/predict"
+        if(sessionStorage.getItem("user_type") == "member"){
+            url = "/api/member/predict"
         }
+        $.ajax({
+            type: "POST",
+            url: url,
+            processData: false,
+            contentType: false,
+            data: data,
+            success: function (response) {
+                if(response.process_status == "Success"){
+                    let obj = JSON.parse(response.processed_faces)
+                    document.getElementById('emotion').innerText = "Predicted emotions:"
+                    obj.forEach(element => {
+                        document.getElementById('emotion').innerText += "\n" + element.predicted_emotion
+                    })
+                    drawChart(obj)
+                }
+                else{
+                    document.getElementById('emotion').innerText = "Could not get results"
+                    let canvas = document.getElementById('chart');
+                    let ctx = canvas.getContext('2d')
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                }
+            },
+            error: function (response) {
+                console.log(response)
+            }
+        })
+        
     })
 
     function drawChart(obj) {
-        let canvas = document.getElementById('chart')
-        const context = canvas.getContext('2d');
-        context.clearRect(0, 0, canvas.width, canvas.height);
         let labels = ["Feared",
             "Happy",
             "Sad",
@@ -126,27 +131,5 @@ $(document).ready(function () {
         return color;
     }
 
-    function generateResults(data) {
-        $("#resultsTabs").css("display", "block")
-        $.ajax({
-            type: "POST",
-            url: "/api/predict",
-            processData: false,
-            contentType: false,
-            data: data,
-            success: function (response) {
-                let obj = JSON.parse(response.processed_faces)
-                document.getElementById('emotion').innerText = ""
-                document.getElementById('emotion').innerText = "Predicted emotions:"
-                obj.forEach(element => {
-                    document.getElementById('emotion').innerText += "\n" + element.predicted_emotion
-                })
 
-                drawChart(obj)
-            },
-            error: function (response) {
-                console.log(response)
-            }
-        })
-    }
 });

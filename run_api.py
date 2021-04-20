@@ -23,14 +23,13 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="static/templates")
 
 # 78.31.188.217
-database = DB(app, 'root', '', '78.31.188.217', '3306', 'fast_api_emotion_detection')
+database = DB(app, 'root', '', '127.0.0.1', '3306', 'fast_api_emotion_detection')
 
 
 async def get_current_user(token: str = Depends(oauth2_scheme)):
     try:
         payload = jwt.decode(token, JWT_SECRET_KEY, algorithms=[ALGORITHM])
         user = await User.get(id=payload.get('id'))
-
     except:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -91,22 +90,29 @@ async def create_user(user: database.User_Pydantic):
     return {'access_token': token, 'token_type': 'bearer'}
 
 
-@app.post("/api/predict")
+@app.post("/api/member/predict")
 def predict_image(predict_image: UploadFile = File(...)):
     contents = predict_image.file.read()
     img_np = cv2.imdecode(np.frombuffer(contents, np.uint8), -1)
     faces = emotion_detector.getAllEmotionsFromPicture(img_np)
     faces_to_send = []
+    if not faces:
+        return {'processed_faces': "No faces found", 'process_status':"Failure"}
     for face in faces:
         faces_to_send.append(face.__dict__)
-    return {'processed_faces': json.dumps(faces_to_send)}
+    return {'processed_faces': json.dumps(faces_to_send), 'process_status':"Success"}
 
 
-@app.post("/api/dimensions")
-def check_dimensions(predict_image: UploadFile = File(...)):
-    dim_check = False
+@app.post("/api/guest/predict")
+def guest_predict_image(predict_image: UploadFile = File(...)):
     contents = predict_image.file.read()
     image = cv2.imdecode(np.frombuffer(contents, np.uint8), -1)
     if image.shape[0] < 480 and image.shape[1] < 720:
-        dim_check = True
-    return {'image_dimensions': dim_check}
+        contents = predict_image.file.read()
+        img_np = cv2.imdecode(np.frombuffer(contents, np.uint8), -1)
+        faces = emotion_detector.getAllEmotionsFromPicture(img_np)
+        faces_to_send = []
+        for face in faces:
+            faces_to_send.append(face.__dict__)
+        return {'processed_faces': json.dumps(faces_to_send), 'process_status':"Success"}
+    return {'processed_faces': "Dimensions needs to be no more than 480 x 720", 'process_status':"Failure"}

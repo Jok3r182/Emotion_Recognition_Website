@@ -1,4 +1,3 @@
-let chart
 Webcam.set({
     height: 500,
     width: 500,
@@ -9,7 +8,6 @@ Webcam.attach("#myCamera")
 function takePicture() {
 
     Webcam.snap(function (data_uri) {
-        document.getElementById('yourImage').style.display = 'none';
         document.getElementById('imgResults').src = data_uri
         $("#resultsTabs").css("display", "block")
         $("#captureImage").css("display", 'none')
@@ -18,20 +16,31 @@ function takePicture() {
         let data = new FormData()
         document.getElementById('myCamera').style.display = 'none'
         data.append('predict_image', img)
+        url = "/api/guest/predict"
+        if(sessionStorage.getItem("user_type") == "member"){
+            url = "/api/member/predict"
+        }
         $.ajax({
             type: "POST",
-            url: "/api/predict",
+            url: url,
             processData: false,
             contentType: false,
             data: data,
             success: function (response) {
-                let obj = JSON.parse(response.processed_faces)
-                document.getElementById('emotion').innerText = ""
-                document.getElementById('emotion').innerText = "Predicted emotions:"
-                obj.forEach(element => {
-                    document.getElementById('emotion').innerText += "\n" + element.predicted_emotion
-                })
-                drawChart(obj)
+                if(response.process_status == "Success"){
+                    let obj = JSON.parse(response.processed_faces)
+                    document.getElementById('emotion').innerText = "Predicted emotions:"
+                    obj.forEach(element => {
+                        document.getElementById('emotion').innerText += "\n" + element.predicted_emotion
+                    })
+                    drawChart(obj)
+                }
+                else{
+                    document.getElementById('emotion').innerText = "Could not get results"
+                    let canvas = document.getElementById('chart');
+                    let ctx = canvas.getContext('2d')
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                }
             },
             error: function (response) {
                 console.log(response)
@@ -42,9 +51,6 @@ function takePicture() {
 }
 
 function drawChart(obj) {
-    let canvas = document.getElementById('chart')
-    const context = canvas.getContext('2d');
-    context.clearRect(0, 0, canvas.width, canvas.height);
     let labels = ["Feared",
         "Happy",
         "Sad",

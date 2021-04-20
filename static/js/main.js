@@ -6,6 +6,7 @@ $(document).ready(function () {
             xhr.setRequestHeader('Authorization', sessionStorage.getItem("token_type") + " " + sessionStorage.getItem("access_token"));
         },
         success: function (response) {
+            sessionStorage.setItem("user_type", "member")
         },
         error: function (response) {
             sessionStorage.setItem("access_token", "")
@@ -20,8 +21,5 @@ $(document).ready(function () {
         $("#myCamera").css("display", "block")
         $("#resultsTabs").css("display", "none")
         $('#imgResults').attr('src', '#');
-        let canvas = document.getElementById('chart')
-        const context = canvas.getContext('2d');
-        context.clearRect(0, 0, canvas.width, canvas.height);
     });
 });

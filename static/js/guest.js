@@ -9,6 +9,7 @@ $(document).ready(function () {
             window.location.href = "/main"
         },
         error: function (response) {
+            sessionStorage.setItem("user_type", "guest")
         }
     })
     document.getElementById("list-camera-list").classList += " disabled"

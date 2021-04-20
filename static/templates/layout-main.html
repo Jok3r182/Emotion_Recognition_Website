@@ -6,6 +6,7 @@
 
 {% endblock %}
 {% block body %}
+<script>let chart</script>
 <nav class="navbar navbar-expand-md navbar-dark background-navbar navbar-rounded shadow " style="z-index: 100;">
     <a class="navbar-brand abs" href="#">{% block nav %}{% endblock %}</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar">
@@ -59,7 +60,6 @@
                     </div>
                     <div class="tab-pane fade" id="list-camera" role="tabpanel" aria-labelledby="list-camera-list">
                         <div id="myCamera"></div>
-                        <div id="yourImage"></div>
                         <div class="row h-25">
                             <div class="row" id="captureImage">
                                 <button type="button" id="capture" onclick="takePicture()" class="btn btn-back">Capture

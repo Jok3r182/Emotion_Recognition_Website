@@ -25,8 +25,12 @@ function takePicture() {
             contentType: false,
             data: data,
             success: function (response) {
-                console.log(response)
                 let obj = JSON.parse(response.processed_faces)
+                document.getElementById('emotion').innerText = ""
+                document.getElementById('emotion').innerText = "Predicted emotions:"
+                obj.forEach(element => {
+                    document.getElementById('emotion').innerText += "\n" + element.predicted_emotion
+                })
                 drawChart(obj)
             },
             error: function (response) {
@@ -35,7 +39,6 @@ function takePicture() {
         })
 
     })
-
 }
 
 function drawChart(obj) {

@@ -17,6 +17,7 @@ $(document).ready(function () {
         window.location.href = "/"
     });
     $("#list-camera-list").click(function () {
+        $("#myCamera").css("display", "block")
         $("#resultsTabs").css("display", "none")
         $('#imgResults').attr('src', '#');
         let canvas = document.getElementById('chart')

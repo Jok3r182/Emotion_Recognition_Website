@@ -2,7 +2,7 @@ $(document).ready(function () {
     function readURL(input) {
         if (input.files && input.files[0]) {
             let file = input.files[0]
-            var reader = new FileReader();
+            let reader = new FileReader();
             const validImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
             if (!validImageTypes.includes(file['type'])) {
                 alert("Files is not an image")
@@ -12,7 +12,6 @@ $(document).ready(function () {
                     $('#imgResults').attr('src', e.target.result);
                 }
                 reader.readAsDataURL(file);
-
                 return true
             }
         }
@@ -48,8 +47,7 @@ $(document).ready(function () {
                 data: data,
                 success: function (response) {
                     let dimensions = JSON.parse(response.image_dimensions)
-
-                    if (checkPictureDimensions(dimensions[0], dimensions[1])) {
+                    if (dimensions) {
                         generateResults(data)
                     } else {
                         alert("Your picture is bigger than 480x720")
@@ -60,12 +58,14 @@ $(document).ready(function () {
                 }
             })
         } else {
-            console.log(sessionStorage.getItem('access_token').value)
             generateResults(data)
         }
     })
 
     function drawChart(obj) {
+        let canvas = document.getElementById('chart')
+        const context = canvas.getContext('2d');
+        context.clearRect(0, 0, canvas.width, canvas.height);
         let labels = ["Feared",
             "Happy",
             "Sad",
@@ -89,8 +89,8 @@ $(document).ready(function () {
             datasets.push(temp)
             i++
         });
-        var ctx = document.getElementById('chart').getContext('2d');
-        var chart = new Chart(ctx, {
+        let ctx = document.getElementById('chart').getContext('2d');
+        let chart = new Chart(ctx, {
             // The type of chart we want to create
             type: 'bar',
 
@@ -115,17 +115,14 @@ $(document).ready(function () {
     }
 
     function getRandomColor() {
-        var letters = '0123456789ABCDEF';
-        var color = '#';
-        for (var i = 0; i < 6; i++) {
+        let letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
             color += letters[Math.floor(Math.random() * 16)];
         }
         return color;
     }
 
-    function checkPictureDimensions(x, y) {
-        return x < 480 && y < 720
-    }
 
     function generateResults(data) {
         $("#resultsTabs").css("display", "block")

@@ -21,7 +21,6 @@ $(document).ready(function () {
         if (readURL(this)) {
             $("#changeImageRow").css("display", "block");
             $("#uploadImageRow").css("display", "none");
-            $("#nuotaika").css("display", "block")
         } else {
             document.getElementById("myFiles").value = null;
         }

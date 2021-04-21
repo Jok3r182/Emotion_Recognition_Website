@@ -97,10 +97,10 @@ def predict_image(predict_image: UploadFile = File(...)):
     faces = emotion_detector.getAllEmotionsFromPicture(img_np)
     faces_to_send = []
     if not faces:
-        return {'processed_faces': "No faces found", 'process_status':"Failure"}
+        return {'processed_faces': "No faces found", 'process_status': "Failure"}
     for face in faces:
         faces_to_send.append(face.__dict__)
-    return {'processed_faces': json.dumps(faces_to_send), 'process_status':"Success"}
+    return {'processed_faces': json.dumps(faces_to_send), 'process_status': "Success"}
 
 
 @app.post("/api/guest/predict")
@@ -108,11 +108,9 @@ def guest_predict_image(predict_image: UploadFile = File(...)):
     contents = predict_image.file.read()
     image = cv2.imdecode(np.frombuffer(contents, np.uint8), -1)
     if image.shape[0] < 480 and image.shape[1] < 720:
-        contents = predict_image.file.read()
-        img_np = cv2.imdecode(np.frombuffer(contents, np.uint8), -1)
-        faces = emotion_detector.getAllEmotionsFromPicture(img_np)
+        faces = emotion_detector.getAllEmotionsFromPicture(image)
         faces_to_send = []
         for face in faces:
             faces_to_send.append(face.__dict__)
-        return {'processed_faces': json.dumps(faces_to_send), 'process_status':"Success"}
-    return {'processed_faces': "Dimensions needs to be no more than 480 x 720", 'process_status':"Failure"}
+        return {'processed_faces': json.dumps(faces_to_send), 'process_status': "Success"}
+    return {'processed_faces': "Dimensions needs to be no more than 480 x 720", 'process_status': "Failure"}

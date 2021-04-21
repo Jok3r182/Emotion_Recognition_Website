@@ -14,7 +14,7 @@ function takePicture() {
         let img = dataURLtoFile(data_uri, 'personImg.jpeg')
         let data = new FormData()
         data.append('predict_image', img)
-        url = "/api/guest/predict"
+        let url = "/api/guest/predict"
         if(sessionStorage.getItem("user_type") === "member"){
             url = "/api/member/predict"
         }

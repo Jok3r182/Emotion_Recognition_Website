@@ -38,8 +38,8 @@ $(document).ready(function () {
         let data = new FormData()
         data.append('predict_image', document.getElementById("myFiles").files[0])
         $("#resultsTabs").css("display", "block")
-        url = "/api/guest/predict"
-        if(sessionStorage.getItem("user_type") == "member"){
+        let url = "/api/guest/predict"
+        if(sessionStorage.getItem("user_type") === "member"){
             url = "/api/member/predict"
         }
         $.ajax({
@@ -49,7 +49,7 @@ $(document).ready(function () {
             contentType: false,
             data: data,
             success: function (response) {
-                if(response.process_status == "Success"){
+                if(response.process_status === "Success"){
                     let obj = JSON.parse(response.processed_faces)
                     document.getElementById('emotion').innerText = "Predicted emotions:"
                     obj.forEach(element => {

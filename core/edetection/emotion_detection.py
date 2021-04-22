@@ -1,12 +1,10 @@
 import numpy as np
 import cv2
 import tensorflow as tf
-import os
-import json
+from configparser import ConfigParser
 
-os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
-os.environ['TF_XLA_FLAGS'] = '--tf_xla_enable_xla_devices'
-
+config = ConfigParser()
+config.read("./config.ini")
 
 class Face:
     mapped_faces = {
@@ -44,12 +42,14 @@ class Face:
 
 class EmotionDetector:
     def __init__(self):
-        self.new_model = tf.keras.models.load_model("core/tmodels/emotionDetection_InceptionV3.h5")
-        self.faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+        self.new_model = tf.keras.models.load_model(config["emotion_detection"]["model_location"])
+        self.faceCascade = cv2.CascadeClassifier(config["emotion_detection"]["haar_location"])
 
     def getFacesInPicture(self, img):
         grayImg = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        faces = self.faceCascade.detectMultiScale(grayImg, 1.2, 6)
+        faces = self.faceCascade.detectMultiScale(grayImg, 
+            float(config["emotion_detection"]["multiscale_scaleFactor"]), 
+            int(config["emotion_detection"]["multiscale_minNeighbors"]))
         return faces
 
     def getEmotionFromFace(self, img, size):
@@ -75,5 +75,7 @@ class EmotionDetector:
         face_list = []
         for (x, y, w, h) in faces:
             roi_color = frame[y:y + h, x:x + w]
-            face_list.append(self.getProcessedFace([float(x), float(y), float(w), float(h)], roi_color, 299))
+            face_list.append(self.getProcessedFace([float(x), float(y), float(w), float(h)], 
+                roi_color, 
+                int(config["emotion_detection"]["image_size"])))
         return face_list

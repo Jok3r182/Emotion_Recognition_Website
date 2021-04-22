@@ -7,13 +7,18 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from core.db.database import User, DB
 from passlib.hash import bcrypt
 from core.edetection.emotion_detection import EmotionDetector
+from configparser import ConfigParser
 import cv2
 import numpy as np
 import jwt
 import json
 
-JWT_SECRET_KEY = "966a2c7fe681ab441ef5efcb7ccdfcd19639c13fd6e923cde688617f2f528976"
-ALGORITHM = "HS256"
+
+config = ConfigParser()
+config.read('config.ini')
+
+JWT_SECRET_KEY = config["DEFAULT"]["JWT_SECRET_KEY"]
+ALGORITHM = config["DEFAULT"]["ALGORITHM"]
 
 app = FastAPI()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl='token')
@@ -23,7 +28,12 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="static/templates")
 
 # 78.31.188.217
-database = DB(app, 'root', '', '127.0.0.1', '3306', 'fast_api_emotion_detection')
+database = DB(app, 
+    config["database"]["username"], 
+    config["database"]["password"], 
+    config["database"]["host"], 
+    config["database"]["port"], 
+    config["database"]["db_name"])
 
 
 async def get_current_user(token: str = Depends(oauth2_scheme)):
@@ -81,7 +91,7 @@ async def get_user(user: database.User_Pydantic = Depends(get_current_user)):
     return user
 
 
-@app.post('/users')
+@app.post('/user/create')
 async def create_user(user: database.User_Pydantic):
     user_obj = User(username=user.username, password_hash=bcrypt.hash(user.password_hash), email=user.email)
     await user_obj.save()
@@ -91,23 +101,25 @@ async def create_user(user: database.User_Pydantic):
 
 
 @app.post("/api/member/predict")
-def predict_image(predict_image: UploadFile = File(...)):
-    contents = predict_image.file.read()
-    img_np = cv2.imdecode(np.frombuffer(contents, np.uint8), -1)
-    faces = emotion_detector.getAllEmotionsFromPicture(img_np)
-    faces_to_send = []
-    if not faces:
-        return {'processed_faces': "No faces found", 'process_status': "Failure"}
-    for face in faces:
-        faces_to_send.append(face.__dict__)
-    return {'processed_faces': json.dumps(faces_to_send), 'process_status': "Success"}
+async def predict_image(predict_image: UploadFile = File(...), user: database.User_Pydantic = Depends(get_current_user)):
+    if user: 
+        contents = predict_image.file.read()
+        img_np = cv2.imdecode(np.frombuffer(contents, np.uint8), -1)
+        faces = emotion_detector.getAllEmotionsFromPicture(img_np)
+        faces_to_send = []
+        if not faces:
+            return {'processed_faces': "No faces found", 'process_status': "Failure"}
+        for face in faces:
+            faces_to_send.append(face.__dict__)
+        return {'processed_faces': json.dumps(faces_to_send), 'process_status': "Success"}
+    return {'processed_faces':"Bad token", 'process_status':"Failure"}
 
 
 @app.post("/api/guest/predict")
 def guest_predict_image(predict_image: UploadFile = File(...)):
     contents = predict_image.file.read()
     image = cv2.imdecode(np.frombuffer(contents, np.uint8), -1)
-    if image.shape[0] < 480 and image.shape[1] < 720:
+    if image.shape[0] < int(config["DEFAULT"]["guest_image_height"]) and image.shape[1] < int(config["DEFAULT"]["guest_image_width"]):
         faces = emotion_detector.getAllEmotionsFromPicture(image)
         faces_to_send = []
         for face in faces:

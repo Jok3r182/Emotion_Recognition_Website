@@ -22,4 +22,11 @@ $(document).ready(function () {
         $("#resultsTabs").css("display", "none")
         $('#imgResults').attr('src', '#');
     });
+    $("#list-upload-list").click(function () {
+        document.getElementById("myFiles").value = null;
+        $("#uploadImageRow").css("display", "block")
+        $("#resultsTabs").css("display", "none")
+        $("#changeImageRow").css("display", "none");
+        $('#imgResults').attr('src', '#');
+    });
 });

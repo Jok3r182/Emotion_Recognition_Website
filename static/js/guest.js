@@ -14,4 +14,11 @@ $(document).ready(function () {
     })
     document.getElementById("list-camera-list").classList += " disabled"
     document.getElementById("list-camera-list").textContent = "Camera (For Members Only)"
+    $("#list-upload-list").click(function () {
+        document.getElementById("myFiles").value = null;
+        $("#uploadImageRow").css("display", "block")
+        $("#resultsTabs").css("display", "none")
+        $("#changeImageRow").css("display", "none");
+        $('#imgResults').attr('src', '#');
+    });
 });

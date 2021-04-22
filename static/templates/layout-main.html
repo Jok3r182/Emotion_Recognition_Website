@@ -1,11 +1,7 @@
 {% extends "layout.html" %}
 {% block title %}Home{% endblock %}
-{% block head %}
-{{ super() }}
-<script src="{{url_for('static', path='/js/upload.js')}}"></script>
-
-{% endblock %}
 {% block body %}
+<script src="{{url_for('static', path='/js/upload.js')}}"></script>
 <script>let chart</script>
 <nav class="navbar navbar-expand-md navbar-dark background-navbar navbar-rounded shadow " style="z-index: 100;">
     <a class="navbar-brand abs" href="#">{% block nav %}{% endblock %}</a>
@@ -92,7 +88,7 @@
                     <div class="tab-content" id="nav-tab-Content">
                         <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
                              aria-labelledby="nav-home-tab">
-                            <img class="img-fluid" id="imgResults" src="#" alt="First slide">
+                            <img class="img-fluid" id="imgResults" src="#">
                             <h2 id="emotion"></h2>
                         </div>
                         <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">

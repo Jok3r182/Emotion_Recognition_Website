@@ -31,7 +31,6 @@ $(document).ready(function () {
         $("#uploadImageRow").css("display", "block")
         $("#resultsTabs").css("display", "none")
         $("#changeImageRow").css("display", "none");
-        $("#nuotaika").css("display", "none")
     })
 
     $("#btnGenerateResults").click(function () {
@@ -48,6 +47,9 @@ $(document).ready(function () {
             processData: false,
             contentType: false,
             data: data,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', sessionStorage.getItem("token_type") + " " + sessionStorage.getItem("access_token"));
+            },
             success: function (response) {
                 if(response.process_status === "Success"){
                     let obj = JSON.parse(response.processed_faces)

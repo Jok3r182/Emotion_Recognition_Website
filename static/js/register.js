@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
     $("#btnRegister").click(function () {
         if (checkForm()) {
             let username = document.getElementById("inputUsername4").value
@@ -10,7 +9,7 @@ $(document).ready(function () {
             }
             $.ajax({
                 type: "POST",
-                url: "/users",
+                url: "/user/create",
                 processData: false,
                 data: JSON.stringify(data),
                 success: function (response) {
@@ -85,7 +84,6 @@ function testConfirmPassword() {
 function validateEmail(mail)
 {
  return /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(mail);
-
 }
 
 function testEmail() {

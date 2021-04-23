@@ -14,6 +14,7 @@ $(document).ready(function () {
     })
     document.getElementById("list-camera-list").classList += " disabled"
     document.getElementById("list-camera-list").textContent = "Camera (For Members Only)"
+    document.getElementById("list-upload-list").textContent = "Upload (Only 480x720 Max)"
     $("#list-upload-list").click(function () {
         document.getElementById("myFiles").value = null;
         $("#uploadImageRow").css("display", "block")

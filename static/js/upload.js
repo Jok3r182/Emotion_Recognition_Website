@@ -1,6 +1,6 @@
 $(document).ready(function () {
     function readURL(input) {
-        if (input.files && input.files[0]) {
+        if (input.files[0]) {
             let file = input.files[0]
             let reader = new FileReader();
             const validImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
